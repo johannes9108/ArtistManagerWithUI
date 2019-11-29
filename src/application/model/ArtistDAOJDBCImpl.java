@@ -10,7 +10,7 @@ import java.util.List;
 public class ArtistDAOJDBCImpl implements ArtistDAO {
 
 	Connection con;
-	PreparedStatement add, delete, update, showAll, findById;
+	PreparedStatement add, delete, update, showAll, findById,findByFirstName,findByLastName,findByAge;
 
 	public ArtistDAOJDBCImpl() {
 
@@ -23,6 +23,9 @@ public class ArtistDAOJDBCImpl implements ArtistDAO {
 			update = con.prepareStatement("UPDATE ARTISTS SET firstName=?,lastName=?,age=? where id=?");
 			showAll = con.prepareStatement("SELECT * FROM ARTISTS");
 			findById = con.prepareStatement("SELECT * FROM ARTISTS where id=?");
+			findByFirstName = con.prepareStatement("SELECT * FROM ARTISTS WHERE firstName like ?");
+			findByLastName = con.prepareStatement("SELECT * FROM ARTISTS WHERE lastName like ?");
+			findByAge = con.prepareStatement("SELECT * FROM ARTISTS WHERE age=?");
 
 		} catch (SQLException e) {
 			throw new RuntimeException("Something went wrong with the SQL");
@@ -77,8 +80,9 @@ public class ArtistDAOJDBCImpl implements ArtistDAO {
 			ResultSet rs = showAll.executeQuery();
 			List<Artist> result = new ArrayList<Artist>();
 			while (rs.next()) {
-				Artist artist = new Artist(rs.getInt("id"), rs.getString("firstName"),
+				Artist artist = new Artist(rs.getString("firstName"),
 						rs.getString("lastName"),rs.getInt("age"));
+				artist.setId(rs.getInt("id"));
 				result.add(artist);
 			}
 
@@ -96,8 +100,9 @@ public class ArtistDAOJDBCImpl implements ArtistDAO {
 			findById.setInt(1, id);
 			ResultSet rs = findById.executeQuery();
 			if (rs.next()) {
-				Artist artist = new Artist(rs.getInt("id"), rs.getString("firstName"),
+				Artist artist = new Artist(rs.getString("firstName"),
 						rs.getString("lastName"),rs.getInt("age"));
+				artist.setId(rs.getInt("id"));
 				return artist;
 			}
 		} catch (SQLException e) {
@@ -105,6 +110,63 @@ public class ArtistDAOJDBCImpl implements ArtistDAO {
 		}
 
 		return null;
+	}
+
+	@Override
+	public List<Artist> findByFirstName(String firstName) {
+		ArrayList<Artist> result = new ArrayList<>();
+		try {
+			findByFirstName.setString(1, firstName);
+			ResultSet rs = findByFirstName.executeQuery();
+			while (rs.next()) {
+				Artist artist = new Artist(rs.getString("firstName"),
+						rs.getString("lastName"),rs.getInt("age"));
+				artist.setId(rs.getInt("id"));
+				result.add(artist);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException("Something went wrong with the SQL: " +  e.getMessage());
+		}
+
+		return result;
+	}
+
+	@Override
+	public List<Artist> findByLastName(String lastName) {
+		ArrayList<Artist> result = new ArrayList<>();
+		try {
+			findByLastName.setString(1, lastName);
+			ResultSet rs = findByLastName.executeQuery();
+			while (rs.next()) {
+				Artist artist = new Artist(rs.getString("firstName"),
+						rs.getString("lastName"),rs.getInt("age"));
+				artist.setId(rs.getInt("id"));
+				result.add(artist);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException("Something went wrong with the SQL: " +  e.getMessage());
+		}
+
+		return result;
+	}
+
+	@Override
+	public List<Artist> findByAge(int age) {
+		ArrayList<Artist> result = new ArrayList<>();
+		try {
+			findByAge.setInt(1, age);
+			ResultSet rs = findByAge.executeQuery();
+			while (rs.next()) {
+				Artist artist = new Artist(rs.getString("firstName"),
+						rs.getString("lastName"),rs.getInt("age"));
+				artist.setId(rs.getInt("id"));
+				result.add(artist);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException("Something went wrong with the SQL: " +  e.getMessage());
+		}
+
+		return result;
 	}
 
 }

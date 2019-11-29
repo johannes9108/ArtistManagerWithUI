@@ -15,12 +15,35 @@ import javafx.scene.control.Button;
 public class MainController {
 
 	private Main mainWindow;
+	private TableViewController tableViewController;
+	private CRUDController crudController;
 	private ArtistDAO dao;
-	private ObservableList<Artist> db;
-	
+	private List<Artist> db;
+
 	public MainController() {
 		dao = new ArtistDAOJDBCImpl();
-		db = FXCollections.observableArrayList(dao.getAll());
+		db = dao.getAll();
+	}
+
+	public TableViewController getTableViewController() {
+		return tableViewController;
+	}
+
+	public CRUDController getCrudController() {
+		return crudController;
+	}
+
+	public void setTableViewController(TableViewController tableViewController) {
+		if (this.tableViewController == null)
+			this.tableViewController = tableViewController;
+		this.tableViewController.setWindowAndController(mainWindow, this);
+
+	}
+
+	public void setCrudController(CRUDController crudController) {
+		if (this.crudController == null)
+			this.crudController = crudController;
+		this.crudController.setWindowAndController(mainWindow, this);
 	}
 
 	public Main getMainWindow() {
@@ -30,9 +53,6 @@ public class MainController {
 	public void setMainWindow(Main mainWindow) {
 		this.mainWindow = mainWindow;
 	}
-	
-
-
 
 	@FXML
 	Button showButton;
@@ -59,27 +79,27 @@ public class MainController {
 	Button findByAge;
 
 	public void showAll() {
-		mainWindow.cancel();
-		mainWindow.showAllView(db);
-		
+		mainWindow.closePopUp();
+		mainWindow.showAllView();
+		tableViewController.fillTable(db);
 
 	}
 
 	public void add() {
-		mainWindow.cancel();
+		mainWindow.closePopUp();
 		mainWindow.showAddView();
 
 	}
 
 	public void delete() {
-		mainWindow.cancel();
+		mainWindow.closePopUp();
 		mainWindow.showDeleteView();
 
 	}
 
 	public void update() {
 
-		mainWindow.cancel();
+		mainWindow.closePopUp();
 		mainWindow.showUpdateView();
 	}
 
@@ -89,7 +109,7 @@ public class MainController {
 	}
 
 	public void cancel() {
-		mainWindow.cancel();
+		mainWindow.closePopUp();
 
 	}
 
@@ -115,7 +135,8 @@ public class MainController {
 			break;
 		}
 
-		mainWindow.findByElement(returningString);
+		mainWindow.findByElement();
+		crudController.setDynamicLabel(returningString);
 
 	}
 
@@ -124,7 +145,11 @@ public class MainController {
 	}
 
 	public ObservableList<Artist> getDB() {
-		return db;
+		return FXCollections.observableArrayList(db);
+	}
+
+	public void showSearchResults(List<Artist> results) {
+		tableViewController.showSearchResults(results);
 	}
 
 }

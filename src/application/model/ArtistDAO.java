@@ -13,4 +13,10 @@ public interface ArtistDAO {
 
 	public Artist findById(int id);
 
+	public List<Artist> findByFirstName(String firstName);
+
+	public List<Artist> findByLastName(String lastName);
+
+	public List<Artist> findByAge(int age);
+
 }

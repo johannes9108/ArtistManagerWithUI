@@ -1,9 +1,11 @@
 package application.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import application.Main;
 import application.model.Artist;
 import application.model.ArtistDAO;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -21,6 +23,11 @@ public class CRUDController implements SubController{
 	public Main getMainWindow() {
 		return mainWindow;
 	}
+//	@FXML
+//	public void initialize() {
+//		dao = mainController.getDao();
+//		db = mainController.getDB();
+//	}
 
 	@FXML 
 	private Label dynamicLabel;
@@ -69,23 +76,31 @@ public class CRUDController implements SubController{
 	
 	@FXML
 	public void cancel() {
-		mainWindow.cancel();
+		mainWindow.closePopUp();
 	}
 	
 	@FXML
 	public void handleSearch() {
+		System.out.println(searchField.getText());
 		
 		switch(dynamicLabel.getText()) {
 		case "First Name":
-			
+			System.out.println(dao.findByFirstName(searchField.getText()));
+			mainWindow.closePopUp();
+			mainController.showSearchResults(dao.findByFirstName(searchField.getText()));
 			break;
 		case "Last Name":
+			mainWindow.closePopUp();
+			mainController.showSearchResults(dao.findByLastName(searchField.getText()));
 			break;
 		case "Age":
+			mainWindow.closePopUp();
+			mainController.showSearchResults(dao.findByAge(Integer.parseInt(searchField.getText())));
+			
 			break;
 		case "ID":
-			System.out.println(searchField.getText());
-//			dao.findById(Integer.parseInt(searchField.getText()));
+			mainWindow.closePopUp();
+			mainController.showSearchResults(convertSingleToList(dao.findById(Integer.parseInt(searchField.getText()))));
 			break;
 		}
 	}
@@ -106,14 +121,16 @@ public class CRUDController implements SubController{
 	public void setWindowAndController(Main mainWindow, MainController mainController) {
 		this.mainWindow = mainWindow;
 		this.mainController = mainController;
+		db = mainController.getDB();
+		dao = mainController.getDao();
 	}
 
-	@Override
-	public void setDaoAndDB() {
-		dao = mainController.getDao();
-		db = mainController.getDB();
+
+	private List<Artist> convertSingleToList(Artist artist){
+		ArrayList<Artist> convert = new ArrayList<>();
+		convert.add(artist);
+	return convert;
 	}
-	
 	
 	
 	

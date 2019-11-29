@@ -33,5 +33,20 @@ public class ArtistController implements ArtistDAO {
 		return dao.findById(id);
 	}
 
+	@Override
+	public List<Artist> findByFirstName(String firstName) {
+		return dao.findByFirstName(firstName);
+	}
+
+	@Override
+	public List<Artist> findByLastName(String lastName) {
+		return dao.findByLastName(lastName);
+	}
+
+	@Override
+	public List<Artist> findByAge(int age) {
+		return dao.findByAge(age);
+	}
+
 
 }

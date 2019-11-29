@@ -10,11 +10,10 @@ public class Artist {
 	private IntegerProperty age, id;
 	private StringProperty firstName, lastName;
 
-	public Artist(int id,  String firstName, String lastName, int age) {
+	public Artist(String firstName, String lastName, int age) {
 		this.age = new SimpleIntegerProperty(age);
 		this.firstName = new SimpleStringProperty(firstName);
 		this.lastName = new SimpleStringProperty(lastName);
-		this.id = new SimpleIntegerProperty(id);
 	}
 
 	@Override
@@ -43,6 +42,8 @@ public class Artist {
 	}
 
 	public void setId(int id) {
+		if(this.id==null)
+			this.id = new SimpleIntegerProperty(id);
 		this.id.set(id);
 	}
 

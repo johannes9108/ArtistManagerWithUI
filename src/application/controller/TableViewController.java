@@ -13,7 +13,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class ShowAllController implements SubController{
+public class TableViewController implements SubController{
 
 	private List<Artist> db;
 	private ArtistDAO dao;
@@ -35,7 +35,7 @@ public class ShowAllController implements SubController{
 	@FXML
 	private TableColumn<Artist, Integer> ageColumn;
 	
-	public ShowAllController() {
+	public TableViewController() {
 		
 	}
 
@@ -55,9 +55,8 @@ public class ShowAllController implements SubController{
 //		lastNameColumn.setCellValueFactory(cellData->cellData.getValue().lastNameProperty());
 //		ageColumn.setCellValueFactory(cellData->cellData.getValue().idProperty());
 		
-//		theTable.getItems().add(art);
 		
-
+		
 	}
 
 	public void printStatus() {
@@ -70,26 +69,17 @@ public class ShowAllController implements SubController{
 		this.mainController = mainController;
 	}
 
-	@Override
-	public void setDaoAndDB() {
-		dao = mainController.getDao();
-		db = mainController.getDB();
-	}
 
-	public void fillTable() {
-		ObservableList<Artist> artists = FXCollections.observableArrayList();
-		artists.add(new Artist(10, "j", "j", 10));
-		artists.add(new Artist(20, "j", "j", 10));
-
-		db.forEach(System.out::println);
+	public void fillTable(List<Artist> db) {
 		theTable.getItems().addAll(db);
-		
-//		theTable.setItems(artists);
-		System.out.println(theTable.getItems());
-		System.out.println(theTable.getColumns());
-		
-		System.out.println(firstNameColumn.getCellData(1));
+//		theTable.setItems((ObservableList<Artist>) db);
 
+	}
+	
+
+	public void showSearchResults(List<Artist> results) {
+		theTable.getItems().clear();
+		theTable.getItems().addAll(results);
 	}
 
 	
