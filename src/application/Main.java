@@ -3,73 +3,74 @@ package application;
 import java.io.IOException;
 import java.util.List;
 
+import application.controller.CRUDController;
 import application.controller.MainController;
+import application.controller.ShowAllController;
 import application.model.Artist;
-import application.model.Tuple;
+import application.model.ArtistDAO;
+import application.model.ArtistDAOJDBCImpl;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 
 public class Main extends Application {
 	
-	private MainController controller;
 	private BorderPane root;
+	private Stage popUpStage;
+	private MainController mainController;
 	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(getClass().getResource("/application/view/Main.fxml"));
-			root = loader.load();
-			controller = loader.getController();
-			controller.setMainWindow(this);
-			
-			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.show();
-			
-			
-			
-		} catch(Exception e) {
-			e.printStackTrace();
+				
+				popUpStage = new Stage();
+				
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(getClass().getResource("/application/view/Main.fxml"));
+				root = loader.load();
+				
+				mainController = loader.getController();
+				mainController.setMainWindow(this);
+				
+				
+				Scene scene = new Scene(root);
+				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+				primaryStage.setScene(scene);
+				primaryStage.show();
+				
+				
+				
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
-	}
+		
+		public static void main(String[] args) {
+			launch(args);
+		}
 	
-	public static void main(String[] args) {
-		launch(args);
-	}
-
-	public void showAllView(List<Artist> db) {
+		public void showAllView(List<Artist> db) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/application/view/showAllv2.fxml"));
-			BorderPane ap = loader.load();
+			AnchorPane node = loader.load();
+			
 			
 			SplitPane sp = (SplitPane) root.getCenter();
-			sp.getItems().set(1, ap);
+			sp.getItems().set(1, node);
 			
-			ListView<HBox> theListView = (ListView) ap.getCenter();
-			
-			
-			
-			
-			ObservableList<HBox> list = FXCollections.observableArrayList();
-			
-			for(Artist artist: db) {
-				list.add(new Tuple(artist.getId()+"",artist.getFirstName(),artist.getLastName(),artist.getAge()+"").getTuple());
-			}
-			
-			theListView.setItems(list);
+			ShowAllController showAllController = loader.getController();
+			showAllController.setWindowAndController(this, mainController);
+			showAllController.setDaoAndDB();
+			showAllController.fillTable();
+
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -82,10 +83,17 @@ public class Main extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/application/view/AddView.fxml"));
-			Node node = loader.load();
+			Parent node = loader.load();
 			
-			SplitPane sp = (SplitPane) root.getCenter();
-			sp.getItems().set(1, node);
+			CRUDController controller = loader.getController();
+			controller.setWindowAndController(this, mainController);
+			controller.setDaoAndDB();
+			
+			popUpStage.setScene(new Scene(node));
+			popUpStage.show();
+			
+//			SplitPane sp = (SplitPane) root.getCenter();
+//			sp.getItems().set(1, node);
 			
 			
 		} catch (IOException e) {
@@ -129,6 +137,32 @@ public class Main extends Application {
 	public void clear() {
 //		SplitPane sp = (SplitPane) root.getCenter();
 //		sp.getItems().set(1, null);
+	}
+
+	public void cancel() {
+		if(popUpStage!=null)
+		popUpStage.close();
+	}
+
+	public void findByElement(String element) {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(getClass().getResource("/application/view/findByElement.fxml"));
+			Parent node = loader.load();
+			
+			CRUDController controller = loader.getController();
+			controller.setWindowAndController(this, mainController);
+			controller.setDynamicLabel(element);
+			
+			
+			popUpStage.setScene(new Scene(node));
+			popUpStage.show();
+			
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 	
 	

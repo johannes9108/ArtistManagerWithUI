@@ -24,8 +24,8 @@ public class ArtistController implements ArtistDAO {
 	}
 
 	@Override
-	public List<Artist> showAll() {
-		return dao.showAll();
+	public List<Artist> getAll() {
+		return dao.getAll();
 	}
 
 	@Override

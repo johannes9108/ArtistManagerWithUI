@@ -1,41 +1,73 @@
 package application.model;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class Artist {
 
-	private int age, id;
-	private String firstName, lastName;
-	public Artist(int age, String firstName, String lastName) {
-		this.age = age;
-		this.firstName = firstName;
-		this.lastName = lastName;
+	private IntegerProperty age, id;
+	private StringProperty firstName, lastName;
+
+	public Artist(int id,  String firstName, String lastName, int age) {
+		this.age = new SimpleIntegerProperty(age);
+		this.firstName = new SimpleStringProperty(firstName);
+		this.lastName = new SimpleStringProperty(lastName);
+		this.id = new SimpleIntegerProperty(id);
 	}
-	public int getAge() {
-		return age;
-	}
-	public int getId() {
-		return id;
-	}
+
 	@Override
 	public String toString() {
-		return "Artist [age=" + age + ", id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+		return "Artist [age=" + age.get() + ", id=" + id.get() + ", firstName=" + firstName.get() + ", lastName=" + lastName.get() + "]";
 	}
+
+	public int getAge() {
+		return age.get();
+	}
+
+	public int getId() {
+		return id.get();
+	}
+
 	public String getFirstName() {
+		return firstName.get();
+	}
+
+	public String getLastName() {
+		return lastName.get();
+	}
+
+	public void setAge(int age) {
+		this.age.set(age);
+	}
+
+	public void setId(int id) {
+		this.id.set(id);
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName.set(firstName);
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName.set(lastName);
+	}
+
+	public StringProperty firstNameProperty() {
 		return firstName;
 	}
-	public String getLastName() {
+
+	public StringProperty lastNameProperty() {
 		return lastName;
 	}
-	public void setAge(int age) {
-		this.age = age;
+
+	public IntegerProperty ageProperty() {
+		return age;
 	}
-	public void setId(int id) {
-		this.id = id;
+
+	public IntegerProperty idProperty() {
+		return id;
 	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	
+
 }

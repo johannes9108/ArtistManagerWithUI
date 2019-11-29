@@ -72,14 +72,13 @@ public class ArtistDAOJDBCImpl implements ArtistDAO {
 	}
 
 	@Override
-	public List<Artist> showAll() {
+	public List<Artist> getAll() {
 		try {
 			ResultSet rs = showAll.executeQuery();
 			List<Artist> result = new ArrayList<Artist>();
 			while (rs.next()) {
-				Artist artist = new Artist(rs.getInt("age"), rs.getString("firstName"),
-						rs.getString("lastName"));
-				artist.setId(rs.getInt("id"));
+				Artist artist = new Artist(rs.getInt("id"), rs.getString("firstName"),
+						rs.getString("lastName"),rs.getInt("age"));
 				result.add(artist);
 			}
 
@@ -97,9 +96,8 @@ public class ArtistDAOJDBCImpl implements ArtistDAO {
 			findById.setInt(1, id);
 			ResultSet rs = findById.executeQuery();
 			if (rs.next()) {
-				Artist artist = new Artist(rs.getInt("age"), rs.getString("firstName"),
-						rs.getString("lastName"));
-				artist.setId(rs.getInt("id"));
+				Artist artist = new Artist(rs.getInt("id"), rs.getString("firstName"),
+						rs.getString("lastName"),rs.getInt("age"));
 				return artist;
 			}
 		} catch (SQLException e) {

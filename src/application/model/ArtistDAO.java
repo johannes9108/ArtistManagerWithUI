@@ -9,7 +9,7 @@ public interface ArtistDAO {
 
 	public boolean update(Artist artist);
 
-	public List<Artist> showAll();
+	public List<Artist> getAll();
 
 	public Artist findById(int id);
 
