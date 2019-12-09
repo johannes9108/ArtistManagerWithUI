@@ -2,6 +2,8 @@ package application.controller;
 
 import java.util.List;
 
+import javax.swing.text.TabExpander;
+
 import application.Main;
 import application.model.Artist;
 import application.model.ArtistDAO;
@@ -34,15 +36,13 @@ public class MainController {
 	}
 
 	public void setTableViewController(TableViewController tableViewController) {
-		if (this.tableViewController == null)
-			this.tableViewController = tableViewController;
+		this.tableViewController = tableViewController;
 		this.tableViewController.setWindowAndController(mainWindow, this);
 
 	}
 
 	public void setCrudController(CRUDController crudController) {
-		if (this.crudController == null)
-			this.crudController = crudController;
+		this.crudController = crudController;
 		this.crudController.setWindowAndController(mainWindow, this);
 	}
 
@@ -93,14 +93,18 @@ public class MainController {
 
 	public void delete() {
 		mainWindow.closePopUp();
-		mainWindow.showDeleteView();
-
+		Artist selectedArtist = tableViewController.getSelected();
+		deleteSelected(selectedArtist);
+		
 	}
 
 	public void update() {
 
 		mainWindow.closePopUp();
 		mainWindow.showUpdateView();
+		
+		Artist selectedItem = tableViewController.getSelected();
+		crudController.populateUpdate(selectedItem);
 	}
 
 	public void clear() {
@@ -150,6 +154,17 @@ public class MainController {
 
 	public void showSearchResults(List<Artist> results) {
 		tableViewController.showSearchResults(results);
+	}
+
+	public void refresh() {
+		db = dao.getAll();
+	}
+	
+	
+	public void deleteSelected(Artist selectedArtist) {
+		dao.delete(selectedArtist.getId());
+		refresh();
+		showAll();
 	}
 
 }

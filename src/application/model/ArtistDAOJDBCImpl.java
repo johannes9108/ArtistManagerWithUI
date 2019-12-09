@@ -40,7 +40,6 @@ public class ArtistDAOJDBCImpl implements ArtistDAO {
 			add.setString(2, artist.getLastName());
 			add.setInt(3, artist.getAge());
 			add.executeUpdate();
-			System.out.println("Added: " + artist);
 			return true;
 		} catch (SQLException e) {
 			throw new RuntimeException("Something went wrong with the SQL: " + e.getMessage());
@@ -116,7 +115,7 @@ public class ArtistDAOJDBCImpl implements ArtistDAO {
 	public List<Artist> findByFirstName(String firstName) {
 		ArrayList<Artist> result = new ArrayList<>();
 		try {
-			findByFirstName.setString(1, firstName);
+			findByFirstName.setString(1, "%"+firstName+"%");
 			ResultSet rs = findByFirstName.executeQuery();
 			while (rs.next()) {
 				Artist artist = new Artist(rs.getString("firstName"),
@@ -135,7 +134,7 @@ public class ArtistDAOJDBCImpl implements ArtistDAO {
 	public List<Artist> findByLastName(String lastName) {
 		ArrayList<Artist> result = new ArrayList<>();
 		try {
-			findByLastName.setString(1, lastName);
+			findByLastName.setString(1, "%"+lastName+"%");
 			ResultSet rs = findByLastName.executeQuery();
 			while (rs.next()) {
 				Artist artist = new Artist(rs.getString("firstName"),

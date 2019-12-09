@@ -28,19 +28,21 @@ public class Main extends Application {
 		try {
 
 			popUpStage = new Stage();
-
+			
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/application/view/Main.fxml"));
 			root = loader.load();
 
 			mainController = loader.getController();
 			mainController.setMainWindow(this);
+			mainController.showAll();
 
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
 
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -86,29 +88,32 @@ public class Main extends Application {
 		}
 	}
 
-	public void showDeleteView() {
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(getClass().getResource("/application/view/DeleteView.fxml"));
-			Node node = loader.load();
-
-			SplitPane sp = (SplitPane) root.getCenter();
-			sp.getItems().set(1, node);
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+//	public void showDeleteView() {
+//		try {
+//			FXMLLoader loader = new FXMLLoader();
+//			loader.setLocation(getClass().getResource("/application/view/DeleteView.fxml"));
+//			Parent node = loader.load();
+//
+//			mainController.setCrudController(loader.getController());
+//			
+//
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 
 	public void showUpdateView() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/application/view/UpdateView.fxml"));
-			Node node = loader.load();
+			Parent node = loader.load();
 
-			SplitPane sp = (SplitPane) root.getCenter();
-			sp.getItems().set(1, node);
+			mainController.setCrudController(loader.getController());
+			
+			popUpStage.setScene(new Scene(node));
+			popUpStage.show();
+			
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -123,7 +128,7 @@ public class Main extends Application {
 
 	public void closePopUp() {
 		if (popUpStage != null)
-			popUpStage.close();
+			popUpStage.hide();
 	}
 
 	public void findByElement() {
@@ -132,6 +137,8 @@ public class Main extends Application {
 			loader.setLocation(getClass().getResource("/application/view/findByElement.fxml"));
 			Parent node = loader.load();
 
+			System.out.println("ANROPAR FINDBYELEMET I UI");
+			
 			mainController.setCrudController(loader.getController());
 
 			popUpStage.setScene(new Scene(node));
