@@ -89,20 +89,20 @@ public class Artist {
 	}
 
 
-	public IntegerProperty getAgeProperty() {
-		return ageProperty;
-	}
-
-	public IntegerProperty getIdProperty() {
-		return idProperty;
-	}
-
-	public StringProperty getFirstNameProperty() {
-		return firstNameProperty;
-	}
-
-	public StringProperty getLastNameProperty() {
-		return lastNameProperty;
-	}
+//	public IntegerProperty aeProperty() {
+//		return ageProperty;
+//	}
+//
+//	public IntegerProperty Property() {
+//		return idProperty;
+//	}
+//
+//	public StringProperty firstNameProperty() {
+//		return firstNameProperty;
+//	}
+//
+//	public StringProperty lastNameProperty() {
+//		return lastNameProperty;
+//	}
 
 }

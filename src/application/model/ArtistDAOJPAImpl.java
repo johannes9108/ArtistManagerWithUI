@@ -47,9 +47,6 @@ public class ArtistDAOJPAImpl implements ArtistDAO {
 			
 
 			List<Artist> results = query.getResultList();
-			
-//			for(Artist artist: results)
-//				System.out.println(artist);
 			em.getTransaction().commit();
 
 //			query = em.createQuery("select a from Artists a", Artist.class);

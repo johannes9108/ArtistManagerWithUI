@@ -42,10 +42,10 @@ public class TableViewController implements SubController {
 	@FXML
 	public void initialize() {
 
-		idColumn.setCellValueFactory(new PropertyValueFactory<>("idProperty"));
-		firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstNameProperty"));
-		lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastNameProperty"));
-		ageColumn.setCellValueFactory(new PropertyValueFactory<>("ageProperty"));
+		idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+		firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+		lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+		ageColumn.setCellValueFactory(new PropertyValueFactory<>("age"));
 //		idColumn.setCellValueFactory(new PropertyValueFactory<Artist,Number>("id"));
 //		firstNameColumn.setCellValueFactory(new PropertyValueFactory<Artist,String>("firstName"));
 //		lastNameColumn.setCellValueFactory(new PropertyValueFactory<Artist,String>("lastName"));
@@ -70,6 +70,10 @@ public class TableViewController implements SubController {
 	public void fillTable(List<Artist> db) {
 		System.out.println("Inne i fillTable");
 		System.out.println(db);
+//		Artist tmp = new Artist("Johannes", "Hedman", 15);
+//		tmp.setId(15);
+//		theTable.getItems().add(tmp);
+		
 		theTable.getItems().addAll(db);
 		theTable.getSelectionModel().clearAndSelect(0);
 //		theTable.setItems((ObservableList<Artist>) db);
