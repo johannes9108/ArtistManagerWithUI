@@ -12,20 +12,18 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-
 @Entity
-@Table(name="artists")
+@Table(name = "artists")
 public class Artist {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	private int age;
 	private String firstName;
 	private String lastName;
-	
-	
+
 	@Transient
 	private IntegerProperty ageProperty;
 	@Transient
@@ -44,7 +42,9 @@ public class Artist {
 		this.lastName = lastName;
 	}
 
-	public Artist() {}
+	public Artist() {
+	}
+
 	@Override
 	public String toString() {
 		return "Artist [age=" + age + ", id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + "]";
@@ -67,27 +67,32 @@ public class Artist {
 	}
 
 	public void setAge(int age) {
+		if (ageProperty == null)
+			this.ageProperty = new SimpleIntegerProperty(age);
 		this.ageProperty.set(age);
 		this.age = age;
 	}
 
 	public void setId(int id) {
-		if(this.idProperty==null)
+		if (this.idProperty == null)
 			this.idProperty = new SimpleIntegerProperty(id);
 		this.idProperty.set(id);
-		this.id = age;
+		this.id = id;
 	}
 
 	public void setFirstName(String firstName) {
+		if (firstNameProperty == null)
+			this.firstNameProperty = new SimpleStringProperty(firstName);
 		this.firstNameProperty.set(firstName);
 		this.firstName = firstName;
 	}
 
 	public void setLastName(String lastName) {
+		if (lastNameProperty == null)
+			this.lastNameProperty = new SimpleStringProperty(lastName);
 		this.lastNameProperty.set(lastName);
 		this.lastName = lastName;
 	}
-
 
 //	public IntegerProperty aeProperty() {
 //		return ageProperty;

@@ -5,7 +5,7 @@
 
 
     <class>application.model.Artist</class>
-    <class>application.model.ArtistSimple</class>
+   <!-- <class>application.model.ArtistSimple</class>-->
     
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/artistdatabase"/>

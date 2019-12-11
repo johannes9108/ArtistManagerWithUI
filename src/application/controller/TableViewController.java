@@ -68,8 +68,6 @@ public class TableViewController implements SubController {
 	}
 
 	public void fillTable(List<Artist> db) {
-		System.out.println("Inne i fillTable");
-		System.out.println(db);
 //		Artist tmp = new Artist("Johannes", "Hedman", 15);
 //		tmp.setId(15);
 //		theTable.getItems().add(tmp);
