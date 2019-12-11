@@ -8,6 +8,7 @@ import application.Main;
 import application.model.Artist;
 import application.model.ArtistDAO;
 import application.model.ArtistDAOJDBCImpl;
+import application.model.ArtistDAOJPAImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,7 +24,7 @@ public class MainController {
 	private List<Artist> db;
 
 	public MainController() {
-		dao = new ArtistDAOJDBCImpl();
+		dao = new ArtistDAOJPAImpl();
 		db = dao.getAll();
 	}
 
