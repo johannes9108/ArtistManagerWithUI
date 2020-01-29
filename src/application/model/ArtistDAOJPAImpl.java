@@ -74,7 +74,7 @@ public class ArtistDAOJPAImpl implements ArtistDAO {
 			EntityManager em = emf.createEntityManager();
 			em.getTransaction().begin();
 			Query query = em.createQuery("select a FROM Artist a", Artist.class);
-
+			
 			List<Artist> results = query.getResultList();
 			em.getTransaction().commit();
 
